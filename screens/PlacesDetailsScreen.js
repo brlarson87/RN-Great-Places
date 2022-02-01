@@ -1,14 +1,17 @@
-import React from 'react';
+import React, {useLayoutEffect} from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 
-const PlacesDetailsScreen = ({navigation}) => {
+
+const PlacesDetailsScreen = ({navigation, route}) => {
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: route.params.placeTitle
+    });
+  }, [navigation, route]);
+  
   return (
       <View style={styles.screen}>
           <Text>Places Details Screen</Text>
-          <Button 
-            title="Go to Add Place Screen" 
-            onPress={() => navigation.navigate('AddPlace')}
-          />
       </View>
   );
 };

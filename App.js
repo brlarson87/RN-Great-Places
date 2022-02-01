@@ -1,6 +1,10 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
+//Redux Store
+import { Provider } from 'react-redux';
+import store from './store/store';
 
+//Navigation
 import { PlaceNavigator } from './navigation/PlaceNavigator';
 
 import { LogBox } from 'react-native';
@@ -12,9 +16,11 @@ LogBox.ignoreLogs([
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <PlaceNavigator />
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <PlaceNavigator />
+      </NavigationContainer>
+    </Provider>
   );
 }
 
