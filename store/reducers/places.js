@@ -11,7 +11,7 @@ export default (state = initialState, action) => {
 
     switch(type) {
         case ADD_PLACE:
-            const newPlace = new Place(new Date().toString(), payload) 
+            const newPlace = new Place(new Date().toString(), payload.title, payload.imageUri) 
             return {
                 places: state.places.concat(newPlace)
             }
