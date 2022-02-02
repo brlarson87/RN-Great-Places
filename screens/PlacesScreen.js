@@ -1,5 +1,5 @@
-import React, { useLayoutEffect } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useLayoutEffect, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { StyleSheet, Platform, FlatList } from 'react-native';
 
 import PlaceItem from '../components/UI/PlaceItem';
@@ -8,8 +8,15 @@ import PlaceItem from '../components/UI/PlaceItem';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import CustomHeaderButton from '../components/UI/HeaderButton';
 
+import { loadPlaces } from '../store/actions/places';
+
 const PlacesScreen = ({navigation}) => {
     const places = useSelector(state => state.places.places);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(loadPlaces());
+    }, [dispatch]);
 
     useLayoutEffect(() => {
         navigation.setOptions({
