@@ -12,7 +12,7 @@ export default (state = initialState, action) => {
     switch(type) {
         case SET_PLACES: 
             return {
-                places: payload
+                places: payload.map(pl => new Place(pl.id.toString(), pl.title, pl.imageUri))
             }
         case ADD_PLACE:
             const newPlace = new Place(payload.id.toString(), payload.title, payload.imageUri) 

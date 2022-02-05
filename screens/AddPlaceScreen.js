@@ -5,6 +5,7 @@ import { ScrollView, View, Text, StyleSheet, TextInput, Button } from 'react-nat
 
 import { addPlace } from '../store/actions/places';
 import ImagePicker from '../components/UI/ImagePicker';
+import LocationPicker from '../components/UI/LocationPicker';
 
 import Colors from '../constants/Colors';
 
@@ -36,6 +37,7 @@ const AddPlaceScreen = ({navigation}) => {
               onChangeText={titleChangeHandler}
             />
             <ImagePicker onImageTaken={imageTakenHandler}/>
+            <LocationPicker />
             <Button 
                 title="Save Place" 
                 color={Colors.primary} 
