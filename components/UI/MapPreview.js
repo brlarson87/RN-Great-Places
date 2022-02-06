@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Image, StyleSheet } from 'react-native';
+import { TouchableOpacity, Image, StyleSheet } from 'react-native';
 
 import ENV from '../../env';
+//TODO: Find the bug that's keeping the current location from being fetched
 
 const MapPreview = (props) => {
     let imagePreviewUrl;
@@ -10,9 +11,9 @@ const MapPreview = (props) => {
     }
 
   return (
-    <View style={{...styles.mapPreview, ...props.style}}>
+    <TouchableOpacity onPress={props.onPress} style={{...styles.mapPreview, ...props.style}}>
         {props.location ? <Image style={styles.mapImage} source={{uri: imagePreviewUrl}}/> : props.children}
-    </View>
+    </TouchableOpacity>
   
   )
 };

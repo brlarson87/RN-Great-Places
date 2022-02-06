@@ -6,7 +6,7 @@ import * as Location from 'expo-location';
 import MapPreview from './MapPreview';
 
 
-const LocationPicker = () => {
+const LocationPicker = ({ navigation }) => {
     const [pickedLocation, setPickedLocation] = useState(); 
     const [isFetching, setIsFetching] = useState(false); 
 
@@ -21,7 +21,7 @@ const LocationPicker = () => {
           return true;
     }
     const getLocationHandler = async () => {
-      const hasPermission = verifyPermissions() ;
+      const hasPermission = await verifyPermissions() ;
       if(!hasPermission) {
           return;
       }
@@ -41,15 +41,31 @@ const LocationPicker = () => {
       
     }
 
+    const pickOnMapHandler = () => {
+        navigation.navigate('Map');
+    }
+
 
   return (
       <View style={styles.locationPicker}> 
-          <MapPreview style={styles.mapPreview} location={pickedLocation}>
+          <MapPreview style={styles.mapPreview} location={pickedLocation} onPress={pickOnMapHandler}>
             
               {isFetching ? <ActivityIndicator size='large' color={Colors.primary} /> : <Text>No Location selected yet</Text>}
              
           </MapPreview>
-          <Button title="Get User Location" color={Colors.primary} onPress={getLocationHandler}/>
+          <View style={styles.actions}>
+            <Button 
+                title="Get User Location" 
+                color={Colors.primary} 
+                onPress={getLocationHandler}
+            />
+            <Button 
+                title="Pick on Map" 
+                color={Colors.primary} 
+                onPress={pickOnMapHandler}
+            />
+          </View>
+          
       </View>
   )
 };
@@ -66,6 +82,11 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    actions: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        width: '100%'
     }
 });
 
