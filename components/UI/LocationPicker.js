@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Button, Text, ActivityIndicator, Alert, StyleSheet } from 'react-native';
 import Colors from '../../constants/Colors';
 
@@ -6,9 +6,20 @@ import * as Location from 'expo-location';
 import MapPreview from './MapPreview';
 
 
-const LocationPicker = ({ navigation }) => {
+const LocationPicker = ({ navigation, route, onLocationPicked }) => {
     const [pickedLocation, setPickedLocation] = useState(); 
     const [isFetching, setIsFetching] = useState(false); 
+
+    const mapPickedLocation = route.params
+    ? route.params.pickedLocation
+    : null;
+
+    useEffect(() => {
+        if(mapPickedLocation) {
+            setPickedLocation(mapPickedLocation);
+            onLocationPicked(mapPickedLocation);
+        }
+    }, [mapPickedLocation, onLocationPicked]);
 
     const verifyPermissions = async () => {
         let { status } = await Location.requestForegroundPermissionsAsync();
@@ -33,7 +44,11 @@ const LocationPicker = ({ navigation }) => {
         setPickedLocation({
             lat: location.coords.latitude,
             lng: location.coords.longitude
-        })
+        });
+        onLocationPicked({
+            lat: location.coords.latitude,
+            lng: location.coords.longitude
+        });
       } catch (error) {
           Alert.alert('could not fetch location', 'Please try again later or pick a location on the map', [{text: 'Okay'}]);
       }
